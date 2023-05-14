@@ -32,6 +32,10 @@ button {
 .app-sidebar-note:hover {
   background-color: #d7d2d2;
 }
+.app-sidebar-note.active {
+  background-color: #d7d2d2;
+}
+
 .sidebar-note-title {
   display: flex;
   justify-content: space-between;

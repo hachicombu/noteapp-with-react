@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [activeNote, setActiveNote] = useState(false);
 
   const addNote = () => {
     // 日付と時間を取得
@@ -23,9 +24,20 @@ function App() {
     setNotes([...notes, newNote]);
     console.log(notes);
   };
+
+  const deleteNote = (id) => {
+    const filteredNotes = notes.filter((note) => note.id !== id);
+    setNotes(filteredNotes);
+  };
+
   return (
     <div className="App">
-      <Sidebar addNote={addNote} notes={notes} />
+      <Sidebar
+        addNote={addNote}
+        notes={notes}
+        deleteNote={deleteNote}
+        activeNoteState={[activeNote, setActiveNote]}
+      />
       <Main />
     </div>
   );
