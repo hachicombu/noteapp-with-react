@@ -30,6 +30,12 @@ function App() {
     setNotes(filteredNotes);
   };
 
+  // active状態のnoteを取得
+  const getActiveNote = () => {
+    // activeNote: sidebarクリックでnote.idをセットしている
+    return notes.find((note) => note.id === activeNote);
+  };
+
   return (
     <div className="App">
       <Sidebar
@@ -38,7 +44,7 @@ function App() {
         deleteNote={deleteNote}
         activeNoteState={[activeNote, setActiveNote]}
       />
-      <Main />
+      <Main activeNote={getActiveNote()} />
     </div>
   );
 }
