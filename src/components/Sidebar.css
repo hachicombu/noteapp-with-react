@@ -30,7 +30,7 @@ button {
   transition: all 0.3s;
 }
 .app-sidebar-note:hover {
-  background-color: #f1f0f0;
+  background-color: #d7d2d2;
 }
 .sidebar-note-title {
   display: flex;
