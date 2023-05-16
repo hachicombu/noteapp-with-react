@@ -9,6 +9,7 @@ function App() {
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("notes")) || []
   );
+  // アクティブ状態のnoteを管理
   const [activeNote, setActiveNote] = useState(false);
 
   // notesの更新時にローカルストレージに保存
@@ -16,6 +17,12 @@ function App() {
     // JSON形式に変換して保存
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
+
+  // リロードした時に一番上のノートを選択した状態にする
+  // リロードした時だけ発火 -> useEffect（依存変数[]）
+  useEffect(() => {
+    setActiveNote(notes[0].id);
+  }, []);
 
   const addNote = () => {
     // 日付と時間を取得
@@ -27,7 +34,6 @@ function App() {
       modDate: Date.now(),
     };
     setNotes([...notes, newNote]);
-    console.log(notes);
   };
 
   const deleteNote = (id) => {
