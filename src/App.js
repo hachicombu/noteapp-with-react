@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import { Main } from "./components/Main";
 import { Sidebar } from "./components/Sidebar";
 import "./App.css";
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  // localStrageから取り出す時はJSON形式からJSに戻す
+  const [notes, setNotes] = useState(
+    JSON.parse(localStorage.getItem("notes")) || []
+  );
   const [activeNote, setActiveNote] = useState(false);
+
+  // notesの更新時にローカルストレージに保存
+  useEffect(() => {
+    // JSON形式に変換して保存
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = () => {
     // 日付と時間を取得
