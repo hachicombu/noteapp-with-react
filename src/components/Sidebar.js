@@ -1,6 +1,10 @@
 import "./Sidebar.css";
 export const Sidebar = ({ addNote, notes, deleteNote, activeNoteState }) => {
   const [activeNote, setActiveNote] = activeNoteState;
+
+  // notesを日付順（降順）にソート -> map
+  const sortedNotes = notes.sort((a, b) => b.modDate - a.modDate);
+
   return (
     <div className="app-sidebar">
       <div className="app-sidebar-header">
@@ -8,7 +12,7 @@ export const Sidebar = ({ addNote, notes, deleteNote, activeNoteState }) => {
         <button onClick={addNote}>追加</button>
       </div>
       <div className="app-sidebar-notes">
-        {notes.map((note) => (
+        {sortedNotes.map((note) => (
           <div
             className={`app-sidebar-note ${note.id === activeNote && "active"}`}
             key={note.id}
@@ -19,7 +23,13 @@ export const Sidebar = ({ addNote, notes, deleteNote, activeNoteState }) => {
               <button onClick={() => deleteNote(note.id)}>削除</button>
             </div>
             <p>{note.content}</p>
-            <small>{note.modDate}</small>
+            <small>
+              {new Date(note.modDate).toLocaleDateString("ja-JP", {
+                // 20:04など
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </small>
           </div>
         ))}
       </div>

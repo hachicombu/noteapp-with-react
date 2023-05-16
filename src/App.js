@@ -10,16 +10,12 @@ function App() {
 
   const addNote = () => {
     // 日付と時間を取得
-    const modDate = new Date();
+    // const modDate = new Date();
     const newNote = {
       id: uuid(),
-      title: "新しいノート",
-      content: "新たしいノートの内容です",
-      modDate: modDate.toLocaleDateString("ja-JP", {
-        // 20:04など
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      title: "",
+      content: "",
+      modDate: Date.now(),
     };
     setNotes([...notes, newNote]);
     console.log(notes);
@@ -28,6 +24,19 @@ function App() {
   const deleteNote = (id) => {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);
+  };
+
+  const updateNotes = (updatedNote) => {
+    const updatedNotes = notes.map((note) => {
+      if (note.id === updatedNote.id) {
+        // note.idが選択されているメモidと一致していたらupdated~を格納
+        return updatedNote;
+      } else {
+        // それ以外は現状のメモを格納
+        return note;
+      }
+    });
+    setNotes(updatedNotes);
   };
 
   // active状態のnoteを取得
@@ -44,7 +53,7 @@ function App() {
         deleteNote={deleteNote}
         activeNoteState={[activeNote, setActiveNote]}
       />
-      <Main activeNote={getActiveNote()} />
+      <Main activeNote={getActiveNote()} updateNotes={updateNotes} />
     </div>
   );
 }
