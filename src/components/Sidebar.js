@@ -1,8 +1,13 @@
+import ReactMarkdown from "react-markdown";
 import "./Sidebar.css";
-export const Sidebar = ({ addNote, notes, deleteNote, activeNoteState }) => {
-  const [activeNote, setActiveNote] = activeNoteState;
-
-  // notesを日付順（降順）にソート -> map
+export const Sidebar = ({
+  addNote,
+  notes,
+  deleteNote,
+  activeNote,
+  setActiveNote,
+}) => {
+  // 4. sort notes
   const sortedNotes = notes.sort((a, b) => b.modDate - a.modDate);
 
   return (
@@ -14,18 +19,21 @@ export const Sidebar = ({ addNote, notes, deleteNote, activeNoteState }) => {
       <div className="app-sidebar-notes">
         {sortedNotes.map((note) => (
           <div
-            className={`app-sidebar-note ${note.id === activeNote && "active"}`}
+            className={`app-sidebar-note ${
+              note.id === activeNote.id && "active"
+            }`}
             key={note.id}
-            onClick={() => setActiveNote(note.id)}
+            onClick={() => setActiveNote(note)}
           >
             <div className="sidebar-note-title">
               <strong>{note.title}</strong>
               <button onClick={() => deleteNote(note.id)}>削除</button>
             </div>
-            <p>{note.content}</p>
+
+            <ReactMarkdown>{note.content}</ReactMarkdown>
+
             <small>
               {new Date(note.modDate).toLocaleDateString("ja-JP", {
-                // 20:04など
                 hour: "2-digit",
                 minute: "2-digit",
               })}

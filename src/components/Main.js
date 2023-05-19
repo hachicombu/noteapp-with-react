@@ -1,18 +1,21 @@
 import ReactMarkdown from "react-markdown";
 import "./Main.css";
-export const Main = ({ activeNote, updateNotes }) => {
+export const Main = ({ activeNote, setActiveNote, updateNotes }) => {
+  // 3-1. updateNote
   const editNote = (key, value) => {
-    updateNotes({
-      // スプレッド構文：これまでのnote内容に変更内容のみを追加
+    const editedNote = {
       ...activeNote,
-      [key]: value, // key: title or content
+      [key]: value,
       modDate: Date.now(),
-    });
+    };
+    setActiveNote(editedNote);
+    updateNotes(editedNote);
   };
-  // ノートがない・初期表示
+
   if (!activeNote) {
-    return <div className="no-active-note">ノートが選択されていません</div>;
+    return <div className="app-main-note-edit">ノートがありません。</div>;
   }
+
   return (
     <div className="app-main">
       <div className="app-main-note-edit">
@@ -24,13 +27,13 @@ export const Main = ({ activeNote, updateNotes }) => {
         />
         <textarea
           id="content"
-          placeholder="ノート内容を記入"
           value={activeNote.content}
+          placeholder="ノート内容を入力してください"
           onChange={(e) => editNote("content", e.target.value)}
         ></textarea>
       </div>
       <div className="app-main-note-preview">
-        <div className="preview-title">{activeNote.title}</div>
+        <h1 className="preview-title">{activeNote.title}</h1>
         <ReactMarkdown className="markdown-preview">
           {activeNote.content}
         </ReactMarkdown>
