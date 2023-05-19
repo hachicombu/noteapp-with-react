@@ -21,7 +21,7 @@ function App() {
   // リロードした時に一番上のノートを選択した状態にする
   // リロードした時だけ発火 -> useEffect（依存変数[]）
   useEffect(() => {
-    setActiveNote(notes[0].id);
+    setActiveNote(notes[0]);
   }, []);
 
   const addNote = () => {
