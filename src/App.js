@@ -6,7 +6,9 @@ import uuid from "react-uuid";
 
 const App = () => {
   // 1.2. add/delete note
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")));
+  const [notes, setNotes] = useState(
+    JSON.parse(localStorage.getItem("notes")) || []
+  );
   // 3. isActive?
   const [activeNote, setActiveNote] = useState({});
 
